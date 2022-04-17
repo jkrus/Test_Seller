@@ -15,6 +15,7 @@ type (
 	Config struct {
 		Host string `yaml:"host"`
 		HTTP HTTP   `yaml:"http"`
+		DB   DB     `yaml:"db"`
 	}
 )
 
@@ -58,4 +59,11 @@ func (c *Config) setDefault() {
 	c.Host = "127.0.0.1"
 
 	c.HTTP.Port = 8080
+
+	c.DB.User = "root"
+	c.DB.Pass = "secret"
+	c.DB.Host = "localhost"
+	c.DB.Port = 5432
+	c.DB.Name = "postgres"
+	c.DB.SSLMode = "disable"
 }
