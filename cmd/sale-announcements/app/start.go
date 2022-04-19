@@ -12,6 +12,7 @@ import (
 	"github.com/jkrus/Test_Seller/internal/config"
 	app_err "github.com/jkrus/Test_Seller/internal/errors"
 	app "github.com/jkrus/Test_Seller/internal/handlers/http"
+	"github.com/jkrus/Test_Seller/internal/services"
 	"github.com/jkrus/Test_Seller/pkg/datastore/postgres"
 	"github.com/jkrus/Test_Seller/pkg/server"
 )
@@ -43,14 +44,19 @@ func (s startCmd) Run(ctx context.Context, wg *sync.WaitGroup, cfg *config.Confi
 		return app_err.ErrLoadConfig(err)
 	}
 
-	_, err = postgres.Start(ctx, wg, cfg)
+	orm, err := postgres.Start(ctx, wg, cfg)
 	if err != nil {
 		if !errors.Is(err, http.ErrServerClosed) {
 			return app_err.ErrOpenDatabase(err)
 		}
 	}
 
-	handlers := app.NewHandlers()
+	newServices, err := services.NewServices(ctx, wg, cfg, orm)
+	if err != nil {
+		return err
+	}
+
+	handlers := app.NewHandlers(newServices)
 
 	newHTTP := server.NewHTTP(ctx, wg, cfg, handlers)
 

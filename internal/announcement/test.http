@@ -1,0 +1,90 @@
+PATCH  http://localhost:8080/api/v1/announcements/?uuid=1&path=3
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="file44.txt"
+
+< ./handler.go
+--WebAppBoundary--
+
+###
+POST http://localhost:8080/api/v1/announcements
+Content-Type: application/json
+
+{
+  "name": "jk",
+  "description": "description",
+  "price": 111
+}
+
+###
+POST http://localhost:8080/api/v1/announcements
+Content-Type: application/json
+
+{
+"name": "jk1",
+"description": "description1",
+"price": 111
+}
+
+###
+POST http://localhost:8080/api/v1/announcements
+Content-Type: application/json
+
+{
+  "name": "jk2",
+  "description": "description2",
+  "price": 222
+}
+
+###
+POST http://localhost:8080/api/v1/announcements
+Content-Type: application/json
+
+{
+  "name": "jk3",
+  "description": "description3",
+  "price": 333
+}
+
+
+###
+POST http://localhost:8080/api/v1/announcements
+Content-Type: application/json
+
+{
+  "name": "jk4",
+  "description": "description4",
+  "price": 444
+}
+###
+GET http://localhost:8080/api/v1/announcements/?uuid=1&fields=description&fields=images
+Accept: application/json
+
+###
+
+###
+GET http://localhost:8080/api/v1/announcements/?uuid=1
+Accept: application/json
+
+
+###
+
+GET http://localhost:8080/api/v1/announcements/
+
+
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/v1/announcements/?page=1&limit=3
+
+
+Accept: application/json
+
+###
+
+GET http://localhost:8080/api/v1/announcements/?page=1&limit=2&sort=desc&sortby=data
+Accept: application/json
+
+###
